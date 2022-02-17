@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(198, 223, 207);
+}
+
+canvas {
+    background-color: #151816;
+}
+
+/* Screen Styling
+/* .screen {
+    background-color: greenyellow;
+    width: 
+    height:
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+} */
