@@ -8,11 +8,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(198, 223, 207);
+    background-color: #000000;
 }
 
 canvas {
-    background-color: #151816;
+    background-color: #E03300;
 }
 
 /* Screen Styling

@@ -1,43 +1,81 @@
 class Crusher {
-    constructor (gameInstance) {
+    constructor (gameInstance, x, y, width, speed) {
         this.game = gameInstance;
-        this.x = 200;
-        this.y = 310;
-        this.width = 100;
-        this.height = 310;
-        this.vx = 0;
-        this.vy = 0.1;
+        this.speed = speed;
+        this.width = width;
+        this.height = gameInstance.canvas.height / 2;
+        this.x = x;  // 600
+        this.y = y;  // 300
+        
+        // Crusher Top
+        this.xT = this.x;
+        this.yT = this.y - this.height;
+        this.vxT = 0;
+        this.vyT = 0.2;
 
-        // crusher from top
-        this.yTop = -20;
-        this.xTop = 310;
-        this.vxTop = 0;
-        this.vyTop = 0.1
+        // Crusher Bottom
+        this.xB = this.x;
+        this.yB = this.yT + this.height;
+        this.vxB = 0;
+        this.vyB = 0.2;
     }
+
+
+   checkIntersection (player) {
+       return (
+           player.x + player.radius > this.xT && 
+           player.x < this.xT + this.width &&
+           player.y + player.radius > this.yT && 
+           player.y < this.yT + this.height  
+           ||
+           player.x + player.radius > this.xB && 
+           player.x < this.xB + this.width &&
+           player.y + player.radius  > this.yB && 
+           player.y < this.yB + this.height
+       );
+        
+    }
+
+
     
-    runLogic() {
+    crusherAnimation() {
+
+        //bottom movement
+        this.yT -= this.vyT;
+
+        // top movement
+        this.yB += this.vyB; 
         
-        this.y += this.vy; 
-        this.yTop -=this.vyTop;
+        // crusher top 
         
-        // Top Crusher
-        if (this.yTop - this.vyTop > -10 || this.yTop - this.vyTop < -30) {
-            this.vyTop *= -1
+        if (this.yT - this.vyT < this.height - this.height-20 || this.yT - this.vyT > this.height-this.height) {
+            this.vyT *= -1;
         } 
 
-        // Bottom Crusher
-        if (this.y + this.vy > 320 || this.y + this.vy < 300) {
-            this.vy *= -1;
+        // crusher bottom
+        if (this.yB + this.vyB > this.height + 20 || this.yB + this.vyB < this.height) {
+            this.vyB *= -1;
         }
+    }
+
+
+    runLogic() {
+        this.crusherAnimation();
+        this.xT -= this.speed;
+        this.xB -= this.speed;
+            
     }
     
     draw() {
-        this.game.context.save();
-        this.game.context.fillStyle = '#FFF1B9';
-        this.game.context.fillRect(this.x, this.yTop, this.width, this.height);
 
-        this.game.context.fillStyle = '#FFF1B9';
-        this.game.context.fillRect(this.x, this.y, this.width, this.height);
+        // crusher top
+        this.game.context.save();
+        this.game.context.fillStyle = '#000000';
+        this.game.context.fillRect(this.xT, this.yT, this.width, this.height);
+
+        // crusher bottom
+        this.game.context.fillStyle = '#000000';
+        this.game.context.fillRect(this.xB, this.yB, this.width, this.height);
         this.game.context.restore();
     
     }

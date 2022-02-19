@@ -1,7 +1,7 @@
 class Bricks {
-    constructor (gameInstance) {
+    constructor (gameInstance, x) {
         this.game = gameInstance;
-        this.x = 800;
+        this.x = x;
         this.y = 1.2;
         this.height = 30;
         this.width = 80;
@@ -19,14 +19,21 @@ class Bricks {
         this.game.context.restore();
     }
     
-    runLogic() {
-   
+    bricksAnimation() {
+
         this.y += this.vy; 
         
         // Top Crusher
         if (this.y + this.vy < 1.2 || this.y + this.vy > 2.3) {
             this.vy *= -1
         } 
+
+    }
+
+
+    runLogic() {
+        this.bricksAnimation();
+        this.x -= 1;
 
     }
 
