@@ -9,11 +9,12 @@ class Player {
         this.speed = 12,
         this.friction = 0.98 
         this.run = this.speed *= this.vy; 
-
     }
 
+    drawScore () {
+        this.context.fillText(this.score)
+    }
     
-
     draw () {
         this.game.context.save();
         this.game.context.beginPath();
@@ -23,3 +24,4 @@ class Player {
         this.game.context.restore();
     }
 }
+
