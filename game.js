@@ -1,5 +1,20 @@
 
-// const collisionSound = new Audio(sound-URL);
+// to do: 
+// Show final score in endscreen
+// Soundeffect collision, Start Screen, endscreen, playing Loop + some  hihats
+// Smooth controls
+// Startscreen animation (can I embed gifs?)
+// Changing color background (transition)
+// Obstaces:Crusher
+// Crusher up and down
+// Left and right wall collision only while beeing crushed
+// Spikes ( center of spike as origin for movement maybe?)
+// Bricks (increasing and decreasing by height ?)
+// Rotators (possible)
+// collision by color (if pixel-player black in same position as blck of obsacle {collision}?)
+
+const startSound = new Audio('sounds/looperman-l-5405344-0284410-kick-bass.wav');
+const startBass = new Audio('sounds/looperman-l-3045890-0222379-kingmike13.wav');
 
 class Game {
   constructor(canvasElement, screens) {
@@ -19,20 +34,22 @@ class Game {
     this.obstacles = [];
     this.startTime = Date.now();
     this.displayScreen('playing');
+    startSound.play();
     this.loop();
   }
-
+  
   displayScreen(name) {
     for (let screenName in this.screens) {
       this.screens[screenName].style.display = 'none';
     }
     this.screens[name].style.display = '';
   }
-
+  
   lose() {
     this.running = false;
     // display final score on endscreen
     this.displayScreen('end');
+    // startBass.play(); 
   }
 
   generateObstacle() {
@@ -149,6 +166,7 @@ class Game {
     let seconds = this.timer;
     this.context.font = '36px sans-serif';
     this.context.fillText(seconds, 30, 60);
+    console.dir(this.context.fillText)
     // console.log(this.interval)
   }
 

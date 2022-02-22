@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'Druk'; /*a name to be used later*/
+    src: url('/fonts/DrukXXCond-Super.otf'); /*URL to font*/
+}
+
+
+.classname {
+    font-family: 'Druk';
+}
+
 * {
     margin: 0;
 }
@@ -13,7 +23,9 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #000000;
-    font-family: sans-serif;
+    color: white;
+    font-family: Druk;
+    mix-blend-mode:difference;
 
 }
 
@@ -25,22 +37,34 @@ canvas {
 
 .screen {
     background-color: #E03300;
+    color: black;
     width: 1200px;
     height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 5em;
+    margin-bottom: 40px;
+    
+}
+
+.screen h1 {
+    font-size: 830px;
+    margin-top: 40px;
 }
 
 button {
-    font: inherit;
-    color: #E03300;
-    background-color: black;
-    border: 01
-    padding: 1em; 
+    position: absolute;
+    font-family: sans-serif;
+    border: none;
+    color: black;
+    background-color: #E03300; 
     font-size: 1rem;
-    padding: 20px 30px;
+    padding: 20px 20px;
+    margin-top: 720px;
     border-radius: 40px;
+    
+}
+button:hover {
+    background-color: white;
 }
