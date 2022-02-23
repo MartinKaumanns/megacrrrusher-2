@@ -1,18 +1,24 @@
 class Spikes {
-    constructor(gameInstance){
+    constructor(gameInstance, x, y, start){
         this.game = gameInstance;
-        this.x = 1000; //1000
-        this.y = 600;
+        this.x = x; //1000
+        this.y = this.game.canvas.height;
 
         this.xBottom = this.x;
-        this.yBottom = 600;
         this.vx = 0.8;
-        this.vyBottom = 1.2;
-        this.speed = this.yBottom * this.vyBottom;
+        this.start = this.Bottom;
+        this.end = this.start - 100;
+        
+        //top Triangle
+        this.xTop = this.x - 100;
+        this.yTop = this.y * 0.5;
+        this.vxTop = 0.8;
+        this.endTop = this.x;
+        this.startTop = this.endTop - 100;
     }
 
 
-    /* checkIntersection (player) {
+    checkIntersection (player) {
         return (
             player.x + player.radius > this.xTop && 
             player.x < this.xTop + this.width &&
@@ -21,31 +27,33 @@ class Spikes {
             ||
             player.x + player.radius > this.xBottom && 
             player.x < this.xBottom + this.width &&
-            player.y + player.radius > this.yBottom && 
+            player.y + player.radius  > this.yBottom && 
             player.y < this.yBottom + this.height
         );
          
-     } */
+     }
 
 
 
 
 
     spikesAnimation() {
-             
-
-             // top movement
-             this.yBottom -= this.vyBottom;
-             
-            
-         /*     // crusher bottom
-             if (this.yBottom + this.vyBottom > this.height - 400 || this.yBottom + this.vyBottom < this.height) {
-                 this.vyBottom *= -1;
-             } */  
+        this.x += this.vx; 
+        this.xTop -= this.vxTop;
+        
+        // bottom Spike
+        if (this.x + this.vx > this.start || this.x + this.vx < this.end) {
+            this.vx *= -1;
+        }
+        
+        // top Spike
+        if (this.xTop - this.vxTop < this.startTop || this.xTop - this.vxTop > this.endTop) {
+            this.vxTop *= -1;
+        }   
     }
 
     runLogic() {
-     this.spikesAnimation();
+     this.spikesAnimation() 
          
        
     }
@@ -55,15 +63,15 @@ class Spikes {
         // bottom Triangle
         this.game.context.save();
         this.game.context.beginPath();
-        this.game.context.lineTo(this.x, 600);
-        this.game.context.lineTo(this.x + 200, 0);
-        this.game.context.lineTo(this.x + 400, 600);
+        this.game.context.lineTo(this.x, this.y);
+        this.game.context.lineTo(this.x + 50, this.y * 0.5);
+        this.game.context.lineTo(this.x + 100, this.y);
         this.game.context.closePath();
 
         this.game.context.fillStyle = '#000';
         this.game.context.fill();
        
-       /*  // top Triange
+        // top Triange
         this.game.context.beginPath();
         this.game.context.lineTo(this.xTop, 0);
         this.game.context.lineTo(this.xTop + 50, this.yTop);
@@ -72,7 +80,7 @@ class Spikes {
 
         this.game.context.fillStyle = '#000';
         this.game.context.fill();
-        this.game.context.restore(); */
+        this.game.context.restore();
     }
 
 

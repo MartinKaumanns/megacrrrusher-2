@@ -47,13 +47,12 @@ class Crusher {
         this.yB += this.vyB; 
         
         // crusher top 
-        
-        if (this.yT - this.vyT < this.height - this.height-20 || this.yT - this.vyT > this.height-this.height) {
+        if (this.yT - this.vyT < this.height - this.height - 30 || this.yT - this.vyT > this.height-this.height) {
             this.vyT *= -1;
         } 
 
         // crusher bottom
-        if (this.yB + this.vyB > this.height + 20 || this.yB + this.vyB < this.height) {
+        if (this.yB + this.vyB > this.height + 30 || this.yB + this.vyB < this.height) {
             this.vyB *= -1;
         }
     }
