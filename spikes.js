@@ -37,9 +37,6 @@ class Spikes {
     }
 
 
-
-
-
     draw() {
         // bottom Triangle
         this.game.context.save();
@@ -49,7 +46,7 @@ class Spikes {
         this.game.context.lineTo(this.x + 100, this.y);
         this.game.context.closePath();
 
-        this.game.context.fillStyle = '#0064AA';
+        this.game.context.fillStyle = '#000';
         this.game.context.fill();
        
         // top Triange
@@ -59,7 +56,7 @@ class Spikes {
         this.game.context.lineTo(this.xTop + 100, 0);
         this.game.context.closePath();
 
-        this.game.context.fillStyle = '#0064AA';
+        this.game.context.fillStyle = '#000';
         this.game.context.fill();
         this.game.context.restore();
     }

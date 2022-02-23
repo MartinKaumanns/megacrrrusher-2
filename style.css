@@ -30,7 +30,13 @@ body {
 }
 
 canvas {
-    background-color: #E03300;
+    background-image: linear-gradient(90deg, #E03300, rgb(89, 21, 102));  
+    background-size: 1000%;
+    animation: bg-animation 120s infinite alternate; 
+}
+@keyframes bg-animation {
+    0% {background-position: left}
+    100% {background-position: right}
 }
 
 /* Screen Styling */
@@ -53,7 +59,12 @@ canvas {
     margin-top: 40px;
 }
 
+.finalScore {
+   color: black; 
+}
+
 button {
+    cursor: pointer;
     position: absolute;
     font-family: sans-serif;
     border: none;
