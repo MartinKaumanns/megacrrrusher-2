@@ -12,7 +12,7 @@ class Bricks {
     draw() {
         this.game.context.save();
         // this.game.context.translate(this.x /2, this.y/2);
-        this.game.context.fillStyle = '#347F40';
+        this.game.context.fillStyle = '#000000';
         for (let row = 0; row < 30; row++) {
             this.game.context.fillRect(this.x, row * this.y * 24, this.width, this.height);
         }

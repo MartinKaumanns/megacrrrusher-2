@@ -1,6 +1,6 @@
 class Player extends GameElement {
     constructor (gameInstance) {
-        super(gameInstance,565, 295, 1200, 600);
+        super(gameInstance,527, 295, 1200, 600);
         this.friction = 0.08;
         this.radius = 7.5;
     }

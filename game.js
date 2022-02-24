@@ -1,17 +1,13 @@
 // to do:
-// Show final score in endscreen - Done
-// - Stop counter - Done
-// – Display final score - Done
-// Changing color background (transition) – Done
+
+// Define Bouderies!!!
 // Soundeffect collision, Start Screen, endscreen, playing Loop + some  hihats
-// Smooth controls
 // Startscreen animation (can I embed gifs?)
 // clean array after Obstacles leaving the canvas
-// Spikes ( center of spike as origin for movement maybe?)
+// Spikes (center of spike as origin for movement maybe?)
 // Bricks (increasing and decreasing by height ?)
 // Rotators (possible)
 // Obstaces:Crusher
-// Crusher up and down(?)
 // Left and right wall collision only while beeing crushed
 // collision by color (if pixel-player black in same position as black of obsacle {collision}?)
 
@@ -33,13 +29,13 @@ class Game {
 
     // HARD CODED OBSTACLES
     this.spikes = new Spikes(this, 800, 400, 800);
-    this.bricks = new Bricks(this, 400, 0);
+    this.bricks = new Bricks(this, 1000, 0);
   }
 
   generateObstacle() {
     const createObstacle = new Crusher(
       this,
-      Math.floor(Math.random()* (1200 - 1300 +1)+ 1200),
+      Math.floor(Math.random()* (1400 - 1600 +1)+ 1400),
       300,
       // CRUSHER SCALE
       8 + Math.random() * 180,
@@ -77,7 +73,7 @@ class Game {
   lose() {
     this.running = false;
     this.displayScreen('end');
-    finalScoreDiv.innerHTML = `HGHSCR ${this.timer}`;
+    finalScoreDiv.innerHTML = `SCORE ${this.timer}`;
   }
 
   // NEW CONTROLS
@@ -133,11 +129,11 @@ class Game {
      if (areIntersecting) {
        console.log('intersecting');
        this.lose();
-       // collisionSound.play();
+       collisionSound.play();
       }
     }
     this.spikes.runLogic();
-    // this.bricks.runLogic();
+    this.bricks.runLogic();
   }
 
   drawTimer() {
@@ -157,7 +153,7 @@ class Game {
     this.drawTimer();
 
     // HARD CODED DRAW OBSTACLES
-    this.spikes.draw();
-    // this.bricks.draw();
+    // this.spikes.draw();
+    this.bricks.draw();
   }
 }

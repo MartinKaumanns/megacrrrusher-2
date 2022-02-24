@@ -10,6 +10,7 @@
 
 * {
     margin: 0;
+    box-sizing: border-box;
 }
 
 html, body {
@@ -25,7 +26,6 @@ body {
     background-color: #000000;
     color: white;
     font-family: Druk;
-    mix-blend-mode:difference;
 
 }
 
@@ -37,7 +37,7 @@ body {
     display: inline-block;
     position: absolute;
     margin-bottom: 9px;
-    margin-right: 57px;
+    margin-right: 146px;
 }
 
 canvas {
@@ -68,6 +68,8 @@ canvas {
 .screen h1 {
     font-size: 830px;
     margin-top: 40px;
+    line-height: 0;
+    text-align: center;
 }
 
 .finalScore {
@@ -75,18 +77,28 @@ canvas {
 }
 
 button {
+    height: 120px;
+    width:200px;
+    font-weight: 500;
+    margin-left: 450px;
+    margin-top: 240px;
     cursor: pointer;
     position: absolute;
     font-family: sans-serif;
     border: none;
     color: black;
-    background-color: #E03300; 
-    font-size: 1rem;
+    background-color: rgb(136, 32, 255); 
+    font-size: 1.3rem;
     padding: 20px 20px;
-    margin-top: 720px;
-    border-radius: 40px;
+    border-radius: 50%;
+    letter-spacing: 1px;
     
 }
 button:hover {
     background-color: white;
+    color: black;
+}
+
+#target {
+    transition: opacity 1s;
 }

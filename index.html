@@ -11,15 +11,19 @@
     <!-- // Screens Start, Playing, End -->
     <div class="screen" id="start-screen">
       <span class="dot"></span>
-      <h1>SHAPECRUSHER</h1>
-      <button class="sans">START GAME</button>
+      <div id="target">
+      <h1 >MEGACRUSHER</h1>
+      <button>START GAME</button>
+      </div>
     </div>
     <div class="screen" id="playing-screen" style="display: none">
       <canvas width="1200" height="600"></canvas>
     </div>
     <div class="screen" id="game-over-screen" style="display: none">
-      <h1 class="finalScore">TIME:</h1>
-      <button class="sans">TRY AGAIN</button>
+      <div id="target">  
+        <button>TRY AGAIN</button>
+      <h1 class="finalScore"></h1>
+      </div>
     </div>
 
     <script src="rotators.js"></script>

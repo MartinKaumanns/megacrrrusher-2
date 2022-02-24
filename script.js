@@ -14,11 +14,19 @@ const screenElements = {
 };
 
 const game = new Game(canvasElement, screenElements);
+const target = document.getElementById('target');
+console.dir(target)
 
 startButton.addEventListener ('click',() => {
-    game.start();
+
+    setTimeout(function(){
+        game.start();
+        
+    },1000);
     
 });
+startButton.addEventListener ('click',() => target.style.opacity = '0');
+
 
 tryAgainButton.addEventListener ('click',() => {
     game.start();
