@@ -1,6 +1,4 @@
 // to do:
-
-// Define Bouderies!!!
 // Soundeffect collision, Start Screen, endscreen, playing Loop + some  hihats
 // Startscreen animation (can I embed gifs?)
 // clean array after Obstacles leaving the canvas
@@ -15,7 +13,6 @@ const startSound = new Audio('sounds/Projekt-Space-Crusher.mp3');
 const EndScreenSound = new Audio('sounds/Projekt-Space-Crusher-End.mp3');
 const finalScoreDiv = document.querySelector('.finalScore');
 
-
 class Game {
   constructor(canvasElement, screens) {
     this.canvas = canvasElement;
@@ -27,9 +24,10 @@ class Game {
     this.enableControls();
 
 
+
     // HARD CODED OBSTACLES
     this.spikes = new Spikes(this, 800, 400, 800);
-    this.bricks = new Bricks(this, 1000, 0);
+    this.bricks = new Bricks(this, 500, 0);
   }
 
   generateObstacle() {
@@ -45,13 +43,33 @@ class Game {
     this.obstacles.push(createObstacle);
     console.log(this.obstacles.length)
 
+    }
+
+
+    // GENERATE BRICKS, after mkin the collisions work..
+    generatebricks() {
+      const createBricks = new Bricks(
+        this,
+        Math.floor(Math.random()* (1400 - 1600 +1)+ 1400),
+        300,
+        // CRUSHER SCALE
+        80,
+        // CRUSHER SPEED
+        0.2 + Math.random() + 0.8
+      );
+      this.genBricks.push(createBricks);
+      console.log(this.genBricks.length)
+      }
+
+
+
     // ***** TO BE DONE!! ERASE ELEMENTS FROM OBSTACLE ARRAY **** 
     /* for(obst of this.obstacles) {
         if (obst.x + obst.width <= 0){
             this.obstacles.splice(element);
         } 
     } */   
-  }
+  
 
 
   start() {
@@ -59,6 +77,7 @@ class Game {
     this.startTime = Date.now();
     this.player = new Player(this);
     this.obstacles = [];
+    this.genBricks = []
     this.displayScreen('playing');
     this.loop();
   }
@@ -129,8 +148,15 @@ class Game {
      if (areIntersecting) {
        console.log('intersecting');
        this.lose();
-       collisionSound.play();
+       // collisionSound.play();
       }
+
+
+      const bricksIntersection = this.bricks.bricksIntersection(this.player);
+      if (bricksIntersection) {
+        console.log('inter')
+      }
+
     }
     this.spikes.runLogic();
     this.bricks.runLogic();

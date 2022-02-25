@@ -77,11 +77,13 @@ canvas {
 }
 
 button {
+    transform: rotate(-10deg);
+    margin: 0 auto;
     height: 120px;
     width:200px;
     font-weight: 500;
-    margin-left: 450px;
-    margin-top: 240px;
+    
+    margin-top: 270px;
     cursor: pointer;
     position: absolute;
     font-family: sans-serif;
@@ -99,6 +101,13 @@ button:hover {
     color: black;
 }
 
+.mc2 {
+    position: absolute;
+    margin: -100px 0 0 550px;
+}
+
 #target {
+    display: flex;
+    justify-content: center;
     transition: opacity 1s;
 }

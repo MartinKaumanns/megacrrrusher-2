@@ -5,24 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
+    <title>MEGACRUSHER 2</title>
   </head>
   <body>
     <!-- // Screens Start, Playing, End -->
     <div class="screen" id="start-screen">
       <span class="dot"></span>
       <div id="target">
-      <h1 >MEGACRUSHER</h1>
-      <button>START GAME</button>
+        <h1>MEGACRUSHER</h1>
+        <button>START GAME</button>
+        <img class="mc2" src="/graphic/MC2.png" alt="">
       </div>
     </div>
     <div class="screen" id="playing-screen" style="display: none">
       <canvas width="1200" height="600"></canvas>
     </div>
     <div class="screen" id="game-over-screen" style="display: none">
-      <div id="target">  
+      <div id="target">
+        <h1 class="finalScore"></h1>
         <button>TRY AGAIN</button>
-      <h1 class="finalScore"></h1>
       </div>
     </div>
 

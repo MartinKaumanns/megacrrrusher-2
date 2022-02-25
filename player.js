@@ -1,3 +1,5 @@
+const clamp = (value, min, max ) => Math.min(Math.max(value,min), max);
+
 class Player extends GameElement {
     constructor (gameInstance) {
         super(gameInstance,527, 295, 1200, 600);
@@ -12,31 +14,31 @@ class Player extends GameElement {
             case 'ArrowUp':
               this.accelerationY = -1;
               //CHECK
-              if (this.y <= 0) {
+             /*  if (this.y <= 0) {
                 this.y = 7.5;
-              }
+              } */
               break;
             case 'ArrowDown':
               this.accelerationY = +1;
               //CHECK
-              if (this.y >= this.game.canvas.height) {
+              /* if (this.y >= this.game.canvas.height) {
                 this.y = this.game.canvas.height - 7.5;
-              }
+              } */
               break;
             case 'ArrowRight':
               this.accelerationX = +1;
 
               //CHECK
-              if (this.x >= this.game.canvas.width) {
+              /* if (this.x >= this.game.canvas.width) {
                 this.x = this.game.canvas.width - 7.5;
-              }
+              } */
               break;
             case 'ArrowLeft':
               this.accelerationX = -1;
               
-              if (this.x <= 0) {
+             /*  if (this.x <= 0) {
                 this.x = 0 + 7.5;
-              }
+              } */
               break;
           }
         }
@@ -81,6 +83,9 @@ class Player extends GameElement {
           accelerationX: newAccelerationX,
           accelerationY: newAccelerationY
         }); 
+
+        this.y = clamp(this.y, this.radius, this.game.canvas.height - this.radius);
+        this.x = clamp(this.x, this.radius, this.game.canvas.width - this.radius);
     }
 
     drawScore () {
