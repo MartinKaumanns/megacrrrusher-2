@@ -2,12 +2,9 @@
 // Soundeffect collision, Start Screen, endscreen, playing Loop + some  hihats
 // Startscreen animation (can I embed gifs?)
 // clean array after Obstacles leaving the canvas
-// Spikes (center of spike as origin for movement maybe?)
-// Bricks (increasing and decreasing by height ?)
-// Rotators (possible)
+
 // Obstaces:Crusher
 // Left and right wall collision only while beeing crushed
-// collision by color (if pixel-player black in same position as black of obsacle {collision}?)
 
 const startSound = new Audio('sounds/Projekt-Space-Crusher.mp3');
 const EndScreenSound = new Audio('sounds/Projekt-Space-Crusher-End.mp3');
@@ -22,44 +19,52 @@ class Game {
     this.timer = 0;
     this.keysPressed = [];
     this.enableControls();
-
-
+    this.currentSpeed = 0;
+    this.obst = new Obst(this);
+    this.newObs = [new Obst(this, 600, -200, 200, 400, 1, this.obst.obstBehaviorXU)];
+    this.newObsAnti = [new Obst(this, 600, 400, 200, 400, 1, this.obst.obstBehaviorXD)];
 
     // HARD CODED OBSTACLES
-    this.spikes = new Spikes(this, 800, 400, 800);
-    this.bricks = new Bricks(this, 500, 0);
+   // this.spikes = new Spikes(this, 800, 400, 800);
+    // this.bricks = new Bricks(this, 500, 0);
   }
 
   generateObstacle() {
     const createObstacle = new Crusher(
       this,
-      Math.floor(Math.random()* (1400 - 1600 +1)+ 1400),
+      // Randomized X
+      Math.floor(Math.random()* (1200 - 1400 +1)+ 1200),
+      // 200,
+      // Steady Y (always middle of canvas)
       300,
-      // CRUSHER SCALE
+      // Randomized CRUSHER WIDTH
       8 + Math.random() * 180,
-      // CRUSHER SPEED
-      0.2 + Math.random() + 0.8
+      // Randomized CRUSHER SPEED
+      this.currentSpeed = 0.2 + Math.random() + 0.8
     );
     this.obstacles.push(createObstacle);
     console.log(this.obstacles.length)
 
     }
-
-
-    // GENERATE BRICKS, after mkin the collisions work..
-    generatebricks() {
-      const createBricks = new Bricks(
+   
+//// Randomize Obstacles ///////
+    generateNewObtacle () {
+      const createNewObstacle = new Obs(
         this,
-        Math.floor(Math.random()* (1400 - 1600 +1)+ 1400),
+        // Randomized X
+        Math.floor(Math.random()* (1200 - 1400 +1)+ 1200),
+        // 200,
+        // Steady Y (always middle of canvas)
         300,
-        // CRUSHER SCALE
-        80,
-        // CRUSHER SPEED
-        0.2 + Math.random() + 0.8
+        // Randomized CRUSHER WIDTH
+        8 + Math.random() * 180,
+        // Randomized CRUSHER SPEED
+        this.currentSpeed = 0.2 + Math.random() + 0.8
       );
-      this.genBricks.push(createBricks);
-      console.log(this.genBricks.length)
-      }
+      this.obstacles.push(createObstacle);
+      console.log(this.obstacles.length)
+    }
+   
 
 
 
@@ -77,11 +82,11 @@ class Game {
     this.startTime = Date.now();
     this.player = new Player(this);
     this.obstacles = [];
-    this.genBricks = []
     this.displayScreen('playing');
     this.loop();
   }
 
+  /// Switches the three Screens
   displayScreen(name) {
     for (let screenName in this.screens) {
       this.screens[screenName].style.display = 'none';
@@ -130,36 +135,60 @@ class Game {
   }
   
   runLogic() {
+    this.obst.runLogic();
     this.player.runLogic();
     this.trackTime();
+
+    for (const obstacle of this.newObs) {
+      obstacle.obstBehaviorXD();
+    }
+    
+    for (const obstacle of this.newObsAnti) {
+      obstacle.obstBehaviorXU();
+    }
     
     // HOW MANY OBSTACLES WILL BE GENERATED
-    if (this.obstacles.length < this.timer / 4) {
+    
+   /*  if (this.obstacles.length < this.timer / 8) {
       this.generateObstacle();
-    }
+    } */
     /*
     if (Math.random() < 0.002) {
     }
     */
    for (const obstacle of this.obstacles) {
-     obstacle.runLogic();
+    obstacle.runLogic();
+    // console.log(this.y)
+
      
-     const areIntersecting = obstacle.checkIntersection(this.player);
-     if (areIntersecting) {
+     /* const areIntersectingTop = obstacle.checkIntersectionTop(this.player);
+     if (areIntersectingTop) {
+      console.log('intersecting');
+       // this.lose();
+       // collisionSound.play();
+       this.player.y + this.player.width === this.obstacles.y;
+      }
+
+      const areIntersectingBottom = obstacle.checkIntersectionBottom(this.player);
+     if (areIntersectingBottom) {
+       
        console.log('intersecting');
-       this.lose();
+       // this.lose();
        // collisionSound.play();
       }
 
-
-      const bricksIntersection = this.bricks.bricksIntersection(this.player);
-      if (bricksIntersection) {
-        console.log('inter')
+      // INTERSECTIONS TO LOSE THE GAME
+      
+      if (areIntersectingTop && areIntersectingBottom) {
+        game.lose();
       }
+      if (areIntersectingTop && areIntersectingBottom) {
+        game.lose();
+      } */
 
     }
-    this.spikes.runLogic();
-    this.bricks.runLogic();
+    // this.spikes.runLogic();
+    // this.bricks.runLogic();
   }
 
   drawTimer() {
@@ -171,15 +200,26 @@ class Game {
   draw() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   
-    for (const obstacle of this.obstacles) {
+    /* for (const obstacle of this.obstacles) {
+      obstacle.draw();
+    } */
+
+    this.player.draw();
+    
+    for (const obstacle of this.newObs) {
       obstacle.draw();
     }
 
-    this.player.draw();
+    for (const obstacle of this.newObsAnti) {
+      obstacle.draw();
+    }
+
+
+
     this.drawTimer();
 
     // HARD CODED DRAW OBSTACLES
     // this.spikes.draw();
-    this.bricks.draw();
+    // this.bricks.draw();
   }
 }

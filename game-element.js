@@ -1,5 +1,5 @@
 class GameElement {
-    constructor (gameInstance, x, y, width, height, speedX, speedY, accelerationX, accelerationY) {
+    constructor (gameInstance, x, y, behavior, width, height, speedX, speedY, accelerationX, accelerationY) {
       this.game = gameInstance;
       this.x = x || 0;
       this.y = y || 0;
@@ -9,6 +9,14 @@ class GameElement {
       this.speedY = speedY || 0;
       this.accelerationX = accelerationX || 0;
       this.accelerationY = accelerationY || 0;
+
+      //
+
+      this.behavior = behavior;
+      this.ox = this.x = x; // old position x
+      this.oy = this.y = y; // old position y
+      this.vx = this.vy = 0;
+
     }
   
     checkIntersection (element) {

@@ -1,4 +1,4 @@
-class Bricks {
+class Bricks  extends GameElement {
     constructor (gameInstance, x, y) {
         this.game = gameInstance;
         this.x = x;

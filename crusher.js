@@ -12,44 +12,50 @@ class Crusher {
         this.yT = this.y - this.height;
         this.vxT = 0;
         this.vyT = 0.2;
-
+       
         // Crusher Bottom
         this.xB = this.x;
         this.yB = this.yT + this.height;
         this.vxB = 0;
         this.vyB = 0.2;
+       
     }
 
 
-   checkIntersection (player) {
+   checkIntersectionTop (player) {
        return (
            player.x + player.radius > this.xT && 
-           player.x < this.xT + this.width &&
+           player.x - player.radius < this.xT + this.width &&
            player.y + player.radius > this.yT && 
-           player.y < this.yT + this.height  
-           ||
-           player.x + player.radius > this.xB && 
-           player.x < this.xB + this.width &&
-           player.y + player.radius  > this.yB && 
-           player.y < this.yB + this.height
-       );
-        
+           player.y - player.radius < this.yT + this.height             
+       );   
     }
-
+    
+    checkIntersectionBottom (player) {
+        return (
+            player.x + player.radius > this.xB && 
+            player.x - player.radius < this.xB + this.width &&
+            player.y + player.radius > this.yB && 
+            player.y - player.radius < this.yB + this.height
+        );   
+    }
 
     
     crusherAnimation() {
 
+        // this.yT = this.y + Math.cos(this.vyT) * 10;
+
         //bottom movement
-        this.yT -= this.vyT;
+         this.yT = this.yT -= this.vyT;
 
         // top movement
-        this.yB += this.vyB; 
+         this.yB += this.vyB; 
         
         // crusher top 
         if (this.yT - this.vyT < this.height - this.height - 30 || this.yT - this.vyT > this.height-this.height) {
             this.vyT *= -1;
-        } 
+        }  
+
 
         // crusher bottom
         if (this.yB + this.vyB > this.height + 30 || this.yB + this.vyB < this.height) {
@@ -60,8 +66,8 @@ class Crusher {
 
     runLogic() {
         this.crusherAnimation();
-        this.xT -= this.speed;
-        this.xB -= this.speed;
+        this.xT - this.speed;
+        this.xB - this.speed;
             
     }
     
