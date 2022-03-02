@@ -124,7 +124,7 @@ class Game {
         this.loop();
 
         // MUSIC
-        // startSound.play();
+        startSound.play();
       }
     });
   }
@@ -158,8 +158,8 @@ class Game {
       }
 
     }
-    this.spikes.runLogic();
-    this.bricks.runLogic();
+    // this.spikes.runLogic();
+    // this.bricks.runLogic();
   }
 
   drawTimer() {
@@ -180,6 +180,6 @@ class Game {
 
     // HARD CODED DRAW OBSTACLES
     // this.spikes.draw();
-    this.bricks.draw();
+    // this.bricks.draw();
   }
 }
