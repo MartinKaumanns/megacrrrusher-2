@@ -8,7 +8,8 @@ class Obst {
         this.height = height;
         this.oy = 0;
         this.speed = speed;
-        this.nx = x+1;
+        this.nx = x + 1;
+        this.behavior = behavior;
 
 
              
@@ -62,7 +63,11 @@ class Obst {
         // obj
         this.game.context.save();
         this.game.context.fillStyle = '#ffffff';
-        this.game.context.fillRect(this.x, this.y, this.width, this.height);
+        this.game.context.fillRect(this.x, this.y, this.width, this.height - this.heigth, this.speed, this.obstBehaviorXD);
+
+        this.game.context.save();
+        this.game.context.fillStyle = '#ffffff';
+        this.game.context.fillRect(this.x, this.y, this.width, this.height, this.speed, this.obstBehaviorXU);
     }
 
 

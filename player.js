@@ -5,9 +5,13 @@ class Player extends GameElement {
     super(gameInstance, 527, 295, 1200, 600);
     this.friction = 0.08;
     this.radius = 7.5;
+    this.crushedToDeathTop = false;
+    this.crushedToDeathBottom = false;
   }
 
   runLogic() {
+
+    this.crushedToDeath();
 
     // Player movement Keys
     const keys = this.game.keysPressed;
@@ -29,37 +33,7 @@ class Player extends GameElement {
     }
 
 
-    /// Top Obstacle
-    for (let i = 0; i < this.game.newObs.length; i++) {
- 
-      let obstacle = this.game.newObs[i];
-      // console.log(obstacle.length)
 
-      if (this.x > obstacle.x && this.x < obstacle.x + obstacle.width) {
-        if (this.y < obstacle.y + obstacle.height) {
-          this.y = obstacle.y + obstacle.height;
-          console.log('intersectup');
-        }
-      }  
-    } 
-
-    /// Bottom Obstacle
-    for (let i = 0; i < this.game.newObsAnti.length; i++) {
- 
-      let obstacle = this.game.newObsAnti[i];
-      // console.log(obstacle.length)
-
-      if (this.x > obstacle.x && this.x < obstacle.x + obstacle.width) {
-
-        if (this.y > obstacle.y) {
-          this.y = obstacle.y;
-          console.log('intersectdown');
-        }
-
-      }
-      
-      
-    }
 
 
 
@@ -99,7 +73,7 @@ class Player extends GameElement {
         newX = this.x - 1; 
       }
       
-      /* const verticalIntersectionTop = obstacle.checkIntersectionTop({
+       const verticalIntersectionTop = obstacle.checkIntersectionTop({
         ...this,
         y: newY
       });
@@ -107,9 +81,9 @@ class Player extends GameElement {
       if (verticalIntersectionTop) {
         newSpeedY = 0;
         newY = this.y;
-      } */
+      } 
       
-      /* const verticalIntersectionBottom = obstacle.checkIntersectionBottom({
+       const verticalIntersectionBottom = obstacle.checkIntersectionBottom({
         ...this,
         y: newY
       });
@@ -117,7 +91,7 @@ class Player extends GameElement {
       if (verticalIntersectionBottom) {
         newSpeedY = 0;
         newY = this.y;
-      }  */
+      }  
 
       //// BOTTOM OBSTACLE
 
@@ -141,7 +115,7 @@ class Player extends GameElement {
           newX = this.x; 
         }
         
-        /* const verticalIntersectionTop = obstacle.checkIntersectionTop({
+         const verticalIntersectionTop = obstacle.checkIntersectionTop({
           ...this,
           y: newY
         });
@@ -159,26 +133,20 @@ class Player extends GameElement {
         if (verticalIntersectionBottom) {
           newSpeedY = 0;
           newY = this.y;
-        }  */
+        }  
       }
-      /* 
+       
       
       // INTERSECTIONS TO LOSE THE GAME
       
-      if (verticalIntersectionTop && verticalIntersectionBottom) {
-        game.lose();
-      }
+      //if (verticalIntersectionTop && verticalIntersectionBottom) {
+        // game.lose();
+      //}
       
-      if (horizontalIntersectionTop && horizontalIntersectionBottom) {
+      /* if (horizontalIntersectionTop && horizontalIntersectionBottom) {
         game.lose();
-      } 
-      */
-
+      }  */
       // collision with new obj
-
-
-
-
     }
    
 
@@ -193,6 +161,43 @@ class Player extends GameElement {
 
     this.y = clamp(this.y, this.radius, this.game.canvas.height - this.radius);
     this.x = clamp(this.x, this.radius, this.game.canvas.width - this.radius);
+  }
+
+  crushedToDeath() {
+    
+    /// Top Obstacle
+    for (let i = 0; i < this.game.newObs.length; i++) {
+  
+      let obstacle = this.game.newObs[i];
+      // console.log(obstacle.length)
+  
+      if (this.x > obstacle.x && this.x < obstacle.x + obstacle.width) {
+        if (this.y < obstacle.y + obstacle.height) {
+          this.y = obstacle.y + obstacle.height + this.radius;
+          this.crushedToDeathTop = true;
+          console.log('intersectup');
+        }
+      }  
+    } 
+  
+    /// Bottom Obstacle
+    for (let i = 0; i < this.game.newObsAnti.length; i++) {
+  
+      let obstacle = this.game.newObsAnti[i];
+      // console.log(obstacle.length)
+  
+      if (this.x > obstacle.x && this.x < obstacle.x + obstacle.width) {
+  
+        if (this.y > obstacle.y) {
+          this.y = obstacle.y - this.radius;
+          this.crushedToDeathBottom = true;
+          console.log('intersectdown');
+        }
+      } 
+    }
+    if (this.crushedToDeathTop && this.crushedToDeathBottom) {
+      game.lose();
+    } 
   }
 
   drawScore() {

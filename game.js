@@ -49,7 +49,7 @@ class Game {
    
 //// Randomize Obstacles ///////
     generateNewObtacle () {
-      const createNewObstacle = new Obs(
+      const createNewObstacle = new Obst(
         this,
         // Randomized X
         Math.floor(Math.random()* (1200 - 1400 +1)+ 1200),
@@ -149,9 +149,9 @@ class Game {
     
     // HOW MANY OBSTACLES WILL BE GENERATED
     
-   /*  if (this.obstacles.length < this.timer / 8) {
+    if (this.obstacles.length < this.timer / 8) {
       this.generateObstacle();
-    } */
+    } 
     /*
     if (Math.random() < 0.002) {
     }
@@ -160,8 +160,8 @@ class Game {
     obstacle.runLogic();
     // console.log(this.y)
 
-     
-     /* const areIntersectingTop = obstacle.checkIntersectionTop(this.player);
+     /* 
+      const areIntersectingTop = obstacle.checkIntersectionTop(this.player);
      if (areIntersectingTop) {
       console.log('intersecting');
        // this.lose();
@@ -175,16 +175,16 @@ class Game {
        console.log('intersecting');
        // this.lose();
        // collisionSound.play();
-      }
+      } */
 
       // INTERSECTIONS TO LOSE THE GAME
       
-      if (areIntersectingTop && areIntersectingBottom) {
+      /* if (areIntersectingTop && areIntersectingBottom) {
         game.lose();
       }
       if (areIntersectingTop && areIntersectingBottom) {
         game.lose();
-      } */
+      }  */
 
     }
     // this.spikes.runLogic();
@@ -200,26 +200,22 @@ class Game {
   draw() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   
-    /* for (const obstacle of this.obstacles) {
+     for (const obstacle of this.obstacles) {
       obstacle.draw();
-    } */
+    } 
 
     this.player.draw();
     
-    for (const obstacle of this.newObs) {
+     for (const obstacle of this.newObs) {
       obstacle.draw();
-    }
+    } 
 
-    for (const obstacle of this.newObsAnti) {
+     for (const obstacle of this.newObsAnti) {
       obstacle.draw();
-    }
+    } 
 
 
 
     this.drawTimer();
-
-    // HARD CODED DRAW OBSTACLES
-    // this.spikes.draw();
-    // this.bricks.draw();
   }
 }

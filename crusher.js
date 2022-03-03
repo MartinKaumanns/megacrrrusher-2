@@ -44,7 +44,7 @@ class Crusher {
     crusherAnimation() {
 
         // this.yT = this.y + Math.cos(this.vyT) * 10;
-
+        
         //bottom movement
          this.yT = this.yT -= this.vyT;
 
