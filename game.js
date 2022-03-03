@@ -1,10 +1,4 @@
-// to do:
-// Soundeffect collision, Start Screen, endscreen, playing Loop + some  hihats
-// Startscreen animation (can I embed gifs?)
-// clean array after Obstacles leaving the canvas
-
-// Obstaces:Crusher
-// Left and right wall collision only while beeing crushed
+// randomize new Crusher
 
 const startSound = new Audio('sounds/Projekt-Space-Crusher.mp3');
 const EndScreenSound = new Audio('sounds/Projekt-Space-Crusher-End.mp3');
@@ -15,73 +9,47 @@ class Game {
     this.canvas = canvasElement;
     this.context = canvasElement.getContext('2d');
     this.screens = screens;
-    this.running = false;  
+    this.running = false;
     this.timer = 0;
     this.keysPressed = [];
     this.enableControls();
     this.currentSpeed = 0;
-    this.obst = new Obst(this);
-    this.newObs = [new Obst(this, 600, -200, 200, 400, 1, this.obst.obstBehaviorXU)];
-    this.newObsAnti = [new Obst(this, 600, 400, 200, 400, 1, this.obst.obstBehaviorXD)];
-
-    // HARD CODED OBSTACLES
-   // this.spikes = new Spikes(this, 800, 400, 800);
-    // this.bricks = new Bricks(this, 500, 0);
+    this.arrObstacles = [];
   }
 
+  // CRUSHER: RANDOM GENERATION
   generateObstacle() {
+    const height = this.canvas.height / 2;
+    const width = 200;
+    const x = Math.floor(Math.random() * (1200 - 1400 + 1) + 1200);
+    this.obstacles = [
+      new Obstacle(this, x, 0, width, height, 1, -1),
+      new Obstacle(this, x, height, width, height, 1, 1)
+    ];
+    
+    /*
     const createObstacle = new Crusher(
       this,
       // Randomized X
-      Math.floor(Math.random()* (1200 - 1400 +1)+ 1200),
+      Math.floor(Math.random() * (1200 - 1400 + 1) + 1200),
       // 200,
       // Steady Y (always middle of canvas)
       300,
       // Randomized CRUSHER WIDTH
       8 + Math.random() * 180,
       // Randomized CRUSHER SPEED
-      this.currentSpeed = 0.2 + Math.random() + 0.8
+      (this.currentSpeed = 0.2 + Math.random() + 0.8)
     );
     this.obstacles.push(createObstacle);
-    console.log(this.obstacles.length)
-
-    }
-   
-//// Randomize Obstacles ///////
-    generateNewObtacle () {
-      const createNewObstacle = new Obst(
-        this,
-        // Randomized X
-        Math.floor(Math.random()* (1200 - 1400 +1)+ 1200),
-        // 200,
-        // Steady Y (always middle of canvas)
-        300,
-        // Randomized CRUSHER WIDTH
-        8 + Math.random() * 180,
-        // Randomized CRUSHER SPEED
-        this.currentSpeed = 0.2 + Math.random() + 0.8
-      );
-      this.obstacles.push(createObstacle);
-      console.log(this.obstacles.length)
-    }
-   
-
-
-
-    // ***** TO BE DONE!! ERASE ELEMENTS FROM OBSTACLE ARRAY **** 
-    /* for(obst of this.obstacles) {
-        if (obst.x + obst.width <= 0){
-            this.obstacles.splice(element);
-        } 
-    } */   
-  
-
+    console.log(this.obstacles.length);
+    */
+  }
 
   start() {
     this.running = true;
     this.startTime = Date.now();
     this.player = new Player(this);
-    this.obstacles = [];
+    this.generateObstacle();
     this.displayScreen('playing');
     this.loop();
   }
@@ -102,9 +70,14 @@ class Game {
 
   // NEW CONTROLS
 
-  enableControls () {
+  enableControls() {
     // Prevents scrolling sideways if screen is smaller than cnavas
-    const keysToPreventDefaultAction = ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'];
+    const keysToPreventDefaultAction = [
+      'ArrowUp',
+      'ArrowDown',
+      'ArrowRight',
+      'ArrowLeft'
+    ];
     window.addEventListener('keydown', (event) => {
       if (keysToPreventDefaultAction.includes(event.code)) {
         event.preventDefault();
@@ -112,7 +85,7 @@ class Game {
       this.keysPressed.push(event.code);
     });
     window.addEventListener('keyup', (event) => {
-      this.keysPressed = this.keysPressed.filter(code => code !== event.code);
+      this.keysPressed = this.keysPressed.filter((code) => code !== event.code);
     });
   }
 
@@ -129,67 +102,32 @@ class Game {
         this.loop();
 
         // MUSIC
-        // startSound.play();
+        startSound.play();
       }
     });
   }
-  
+
   runLogic() {
-    this.obst.runLogic();
     this.player.runLogic();
     this.trackTime();
 
-    for (const obstacle of this.newObs) {
-      obstacle.obstBehaviorXD();
-    }
-    
-    for (const obstacle of this.newObsAnti) {
-      obstacle.obstBehaviorXU();
-    }
-    
-    // HOW MANY OBSTACLES WILL BE GENERATED
-    
-    if (this.obstacles.length < this.timer / 8) {
-      this.generateObstacle();
+    for (const obstacle of this.obstacles) {
+      obstacle.runLogic();
+      if (obstacle.x + obstacle.width < 0) {
+        const indexOfObstacle = this.obstacles.indexOf(this.arrObstacles);
+        this.arrObstacles.splice(indexOfObstacle, 2);
+      }
     } 
-    /*
-    if (Math.random() < 0.002) {
-    }
-    */
-   for (const obstacle of this.obstacles) {
-    obstacle.runLogic();
-    // console.log(this.y)
-
-     /* 
-      const areIntersectingTop = obstacle.checkIntersectionTop(this.player);
-     if (areIntersectingTop) {
-      console.log('intersecting');
-       // this.lose();
-       // collisionSound.play();
-       this.player.y + this.player.width === this.obstacles.y;
-      }
-
-      const areIntersectingBottom = obstacle.checkIntersectionBottom(this.player);
-     if (areIntersectingBottom) {
-       
-       console.log('intersecting');
-       // this.lose();
-       // collisionSound.play();
-      } */
-
-      // INTERSECTIONS TO LOSE THE GAME
-      
-      /* if (areIntersectingTop && areIntersectingBottom) {
-        game.lose();
-      }
-      if (areIntersectingTop && areIntersectingBottom) {
-        game.lose();
-      }  */
-
-    }
-    // this.spikes.runLogic();
-    // this.bricks.runLogic();
+    /* if (this.arrObstacles.length < this.timer / 2) {
+      this.generateObstacle();
+    }  */
+     /* if (Math.random() < 0.002) {
+      this.generateObstacle();
+    }  */
   }
+
+
+
 
   drawTimer() {
     let seconds = this.timer;
@@ -199,23 +137,11 @@ class Game {
 
   draw() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  
-     for (const obstacle of this.obstacles) {
-      obstacle.draw();
-    } 
 
+    for (const obstacle of this.obstacles) {
+      obstacle.draw();
+    }
     this.player.draw();
-    
-     for (const obstacle of this.newObs) {
-      obstacle.draw();
-    } 
-
-     for (const obstacle of this.newObsAnti) {
-      obstacle.draw();
-    } 
-
-
-
     this.drawTimer();
   }
 }

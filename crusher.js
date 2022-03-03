@@ -56,7 +56,6 @@ class Crusher {
             this.vyT *= -1;
         }  
 
-
         // crusher bottom
         if (this.yB + this.vyB > this.height + 30 || this.yB + this.vyB < this.height) {
             this.vyB *= -1;
