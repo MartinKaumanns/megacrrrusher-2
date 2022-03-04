@@ -17,6 +17,7 @@ class Game {
     this.enableControls();
     this.currentSpeed = 0;
     this.arrayOfObstacles = [];
+    this.arrayOfSecondObstacles = [];
   }
 
   // Obstacle: RANDOM GENERATION
@@ -30,30 +31,22 @@ class Game {
       new Obstacle(this, x, height, width, height, speed, 1)
     ];
     this.arrayOfObstacles.push(this.obstacles);
-    console.log(this.arrayOfObstacles);
+    // console.log(this.arrayOfObstacles);
 
     // SOUND
-    obstacalappear.play();
+    // youDead.play();
+
+  // SecondObstacle: RANDOM GENERATION  
   }
+generateSecondObstacle(){
+  const height = this.canvas.height * 0.917;
+  const width = 8 + Math.random()* 80;
+  const x = this.canvas.width;
+  const speed = 0.7;
+  const secondObstacle = new SecObstacle (this, x, 0, width, height, speed); 
+  this.arrayOfSecondObstacles.push(secondObstacle);
+};
 
-
-
-  /*
-    const createObstacle = new Crusher(
-      this,
-      // Randomized X
-      Math.floor(Math.random() * (1200 - 1400 + 1) + 1200),
-      // 200,
-      // Steady Y (always middle of canvas)
-      300,
-      // Randomized CRUSHER WIDTH
-      8 + Math.random() * 180,
-      // Randomized CRUSHER SPEED
-      (this.currentSpeed = 0.2 + Math.random() + 0.8)
-    );
-    this.obstacles.push(createObstacle);
-    console.log(this.obstacles.length);
-    */
 
   start() {
     this.running = true;
@@ -75,6 +68,7 @@ class Game {
   lose() {
     this.running = false;
     this.arrayOfObstacles = [];
+    this.arrayOfSecondObstacles = [];
     this.displayScreen('end');
     finalScoreDiv.innerHTML = `SCORE ${this.timer}`;
   }
@@ -105,6 +99,7 @@ class Game {
     this.timer = (milliseconds / 1000).toFixed(1);
   }
 
+
   loop() {
     window.requestAnimationFrame(() => {
       this.runLogic();
@@ -113,15 +108,14 @@ class Game {
         this.loop();
 
         // MUSIC
-        startSound.play();
-        
+        // startSound.play();  
       }
     });
   }
-
   runLogic() {
     this.player.runLogic();
     this.trackTime();
+
 
     for (const obstacle of this.arrayOfObstacles) {
       for (const innerObstacle of obstacle) {
@@ -140,7 +134,23 @@ class Game {
     if (Math.random() < 0.002) {
       this.generateObstacle();
     }
+
+//Second Obstacle: RUN LOGIC
+    for (const elem of this.arrayOfSecondObstacles) {
+      elem.runLogic();
+
+      if (elem.x + elem.width < 0) {
+        const indexOfElem = this.arrayOfSecondObstacles.indexOf(elem);
+        this.arrayOfSecondObstacles.splice(indexOfElem, 1);
+      }
+    }
+    if (this.arrayOfSecondObstacles.length < this.timer / Math.floor(Math.random() * (15 - 16 + 1) + 15)) {
+      this.generateSecondObstacle();
+    }
+
   }
+
+  
 
   drawTimer() {
     let seconds = this.timer;
@@ -158,5 +168,11 @@ class Game {
     }
     this.player.draw();
     this.drawTimer();
+
+
+    for (const elem of this.arrayOfSecondObstacles) {
+   elem.draw();
+    };
   }
+
 }
