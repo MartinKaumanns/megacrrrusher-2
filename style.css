@@ -41,14 +41,16 @@ body {
 }
 
 canvas {
-    background-image: linear-gradient(90deg, #E03300, rgb(89, 21, 102));  
-    background-size: 1000%;
-    animation: bg-animation 120s infinite alternate; 
+    background-image: linear-gradient(90deg, #E03300, rgb(255, 255, 255));  
+    background-size: 10000%;
+    animation: bg-animation 0.2s infinite alternate;
+    animation-iteration-count: 3; 
+    animation-delay: 100s;
 }
-/* @keyframes bg-animation {
+@keyframes bg-animation {
     0% {background-position: left}
     100% {background-position: right}
-} */
+}
 
 /* Screen Styling */
 

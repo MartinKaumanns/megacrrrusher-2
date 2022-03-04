@@ -36,36 +36,39 @@ class Player extends GameElement {
     let newX = x + newSpeedX;
     let newY = y + newSpeedY;
 
-    const obstacles = this.game.obstacles;
+    // const obstacles = this.game.obstacles;
 
     let crushedToDeathTop = false;
     let crushedToDeathBottom = false;
 
-    for (let obstacle of obstacles) {
-      const horizontalIntersection = obstacle.checkIntersection({
-        ...this,
-        x: newX
-      });
-      if (horizontalIntersection) {
-        newSpeedX = 0;
-        newX = this.x - 1;
-      }
-      const verticalIntersection = obstacle.checkIntersection({
-        ...this,
-        x: newX,
-        y: newY
-      });
-      if (verticalIntersection) {
-        newSpeedY = 0;
-        if (obstacle.behavior === -1) {
-          newY = obstacle.y + obstacle.height + this.radius;
-          crushedToDeathTop = true;
-        } else if (obstacle.behavior === 1) {
-          newY = obstacle.y - this.radius;
-          crushedToDeathBottom = true;
-        }
+    for (let element of this.game.arrayOfObstacles) {
+      for (let obstacle of element) {
+
+    const horizontalIntersection = obstacle.checkIntersection({
+      ...this,
+      x: newX
+    });
+    if (horizontalIntersection) {
+      newSpeedX = 0;
+      newX = this.x - 1;
+    }
+    const verticalIntersection = obstacle.checkIntersection({
+      ...this,
+      x: newX,
+      y: newY
+    });
+    if (verticalIntersection) {
+      newSpeedY = 0;
+      if (obstacle.behavior === -1) {
+        newY = obstacle.y + obstacle.height + this.radius;
+        crushedToDeathTop = true;
+      } else if (obstacle.behavior === 1) {
+        newY = obstacle.y - this.radius;
+        crushedToDeathBottom = true;
       }
     }
+  }
+}
 
     if (crushedToDeathTop && crushedToDeathBottom) {
       game.lose();

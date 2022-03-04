@@ -14,20 +14,23 @@ class Game {
     this.keysPressed = [];
     this.enableControls();
     this.currentSpeed = 0;
-    this.arrObstacles = [];
+    this.arrayOfObstacles = [];
   }
 
-  // CRUSHER: RANDOM GENERATION
+  // Obstacle: RANDOM GENERATION
   generateObstacle() {
     const height = this.canvas.height / 2;
-    const width = 200;
+    const width = 8 + Math.random() * 180;
     const x = Math.floor(Math.random() * (1200 - 1400 + 1) + 1200);
     this.obstacles = [
       new Obstacle(this, x, 0, width, height, 1, -1),
       new Obstacle(this, x, height, width, height, 1, 1)
     ];
-    
-    /*
+    this.arrayOfObstacles.push(this.obstacles);
+    console.log(this.arrayOfObstacles);
+  }
+
+  /*
     const createObstacle = new Crusher(
       this,
       // Randomized X
@@ -43,7 +46,6 @@ class Game {
     this.obstacles.push(createObstacle);
     console.log(this.obstacles.length);
     */
-  }
 
   start() {
     this.running = true;
@@ -64,8 +66,10 @@ class Game {
 
   lose() {
     this.running = false;
+    this.arrayOfObstacles = [];
     this.displayScreen('end');
     finalScoreDiv.innerHTML = `SCORE ${this.timer}`;
+    // EndScreenSound.play();
   }
 
   // NEW CONTROLS
@@ -111,23 +115,24 @@ class Game {
     this.player.runLogic();
     this.trackTime();
 
-    for (const obstacle of this.obstacles) {
-      obstacle.runLogic();
-      if (obstacle.x + obstacle.width < 0) {
-        const indexOfObstacle = this.obstacles.indexOf(this.arrObstacles);
-        this.arrObstacles.splice(indexOfObstacle, 2);
+    for (const obstacle of this.arrayOfObstacles) {
+      for (const innerObstacle of obstacle) {
+        innerObstacle.runLogic();
       }
-    } 
-    /* if (this.arrObstacles.length < this.timer / 2) {
+
+      /// CLEANING THE ARRAY OF OBSTACLES ///
+      if (obstacle.x + obstacle.width < 0) {
+        const indexOfObstacle = this.arrayOfObstacles.indexOf(obstacle);
+        this.arrayOfObstacles.splice(indexOfObstacle, 1);
+      }
+    }
+    if (this.arrayOfObstacles.length < this.timer / 8) {
       this.generateObstacle();
-    }  */
-     /* if (Math.random() < 0.002) {
+    }
+    if (Math.random() < 0.002) {
       this.generateObstacle();
-    }  */
+    }
   }
-
-
-
 
   drawTimer() {
     let seconds = this.timer;
@@ -138,8 +143,10 @@ class Game {
   draw() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    for (const obstacle of this.obstacles) {
-      obstacle.draw();
+    for (const obstacle of this.arrayOfObstacles) {
+      for (const innerObstacle of obstacle) {
+        innerObstacle.draw();
+      }
     }
     this.player.draw();
     this.drawTimer();
