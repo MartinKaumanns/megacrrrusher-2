@@ -2,6 +2,8 @@
 
 const startSound = new Audio('sounds/Projekt-Space-Crusher.mp3');
 const EndScreenSound = new Audio('sounds/Projekt-Space-Crusher-End.mp3');
+const obstacalappear = new Audio('sounds/crusher-appear01.mp3');
+const youDead = new Audio('sound/YouareDead.mp3');
 const finalScoreDiv = document.querySelector('.finalScore');
 
 class Game {
@@ -22,13 +24,19 @@ class Game {
     const height = this.canvas.height / 2;
     const width = 8 + Math.random() * 180;
     const x = Math.floor(Math.random() * (1200 - 1400 + 1) + 1200);
+    const speed = 0.2 + Math.random() + 0.8;
     this.obstacles = [
-      new Obstacle(this, x, 0, width, height, 1, -1),
-      new Obstacle(this, x, height, width, height, 1, 1)
+      new Obstacle(this, x, 0, width, height, speed, -1),
+      new Obstacle(this, x, height, width, height, speed, 1)
     ];
     this.arrayOfObstacles.push(this.obstacles);
     console.log(this.arrayOfObstacles);
+
+    // SOUND
+    obstacalappear.play();
   }
+
+
 
   /*
     const createObstacle = new Crusher(
@@ -69,7 +77,6 @@ class Game {
     this.arrayOfObstacles = [];
     this.displayScreen('end');
     finalScoreDiv.innerHTML = `SCORE ${this.timer}`;
-    // EndScreenSound.play();
   }
 
   // NEW CONTROLS
@@ -107,6 +114,7 @@ class Game {
 
         // MUSIC
         startSound.play();
+        
       }
     });
   }
