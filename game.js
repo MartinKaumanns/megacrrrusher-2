@@ -24,7 +24,7 @@ class Game {
   generateObstacle() {
     const height = this.canvas.height / 2;
     const width = 8 + Math.random() * 180;
-    const x = Math.floor(Math.random() * (1200 - 1400 + 1) + 1200);
+    const x = Math.floor(Math.random() * (1400 - 1600 + 1) + 1400);
     const speed = 0.2 + Math.random() + 0.8;
     this.obstacles = [
       new Obstacle(this, x, 0, width, height, speed, -1),
@@ -33,19 +33,16 @@ class Game {
     this.arrayOfObstacles.push(this.obstacles);
     // console.log(this.arrayOfObstacles);
 
-    
-
-  // SecondObstacle: RANDOM GENERATION  
+    // SecondObstacle: RANDOM GENERATION
   }
-generateSecondObstacle(){
-  const height = this.canvas.height * 0.917;
-  const width = 8 + Math.random()* 80;
-  const x = this.canvas.width;
-  const speed = 0.7;
-  const secondObstacle = new SecObstacle (this, x, 0, width, height, speed); 
-  this.arrayOfSecondObstacles.push(secondObstacle);
-};
-
+  generateSecondObstacle() {
+    const height = this.canvas.height * 0.917;
+    const width = 8 + Math.random() * 80;
+    const x = this.canvas.width;
+    const speed = 0.7;
+    const secondObstacle = new SecObstacle(this, x, 0, width, height, speed);
+    this.arrayOfSecondObstacles.push(secondObstacle);
+  }
 
   start() {
     this.running = true;
@@ -54,7 +51,6 @@ generateSecondObstacle(){
     // this.generateObstacle();
     this.displayScreen('playing');
     this.loop();
-
   }
 
   /// Switches the three Screens
@@ -102,7 +98,6 @@ generateSecondObstacle(){
     this.timer = (milliseconds / 1000).toFixed(1);
   }
 
-
   loop() {
     window.requestAnimationFrame(() => {
       this.runLogic();
@@ -112,7 +107,6 @@ generateSecondObstacle(){
 
         // MUSIC
         startSound.play();
-        
       }
     });
   }
@@ -120,7 +114,6 @@ generateSecondObstacle(){
   runLogic() {
     this.player.runLogic();
     this.trackTime();
-
 
     for (const obstacle of this.arrayOfObstacles) {
       for (const innerObstacle of obstacle) {
@@ -140,7 +133,7 @@ generateSecondObstacle(){
       this.generateObstacle();
     } */
 
-// Second Obstacle: RUN LOGIC ////
+    // Second Obstacle: RUN LOGIC ////
 
     for (const elem of this.arrayOfSecondObstacles) {
       elem.runLogic();
@@ -154,30 +147,24 @@ generateSecondObstacle(){
       if (this.arrayOfSecondObstacles.length < this.timer / 20) {
         this.generateSecondObstacle();
       }
-        
-      }
-    
-/*     if (this.timer > 20 ) {
+    }
+
+         if (this.timer > 40 ) {
       if (Math.random() < 0.002) {
         this.generateSecondObstacle();
       }
-    } */
-
-    
-    
+    } 
   }
-  
-  
-  
+
   drawTimer() {
     let seconds = this.timer;
     this.context.font = '36px sans-serif';
     this.context.fillText(seconds, 30, 60);
   }
-  
+
   draw() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    
+
     for (const obstacle of this.arrayOfObstacles) {
       for (const innerObstacle of obstacle) {
         innerObstacle.draw();
@@ -186,10 +173,8 @@ generateSecondObstacle(){
     this.player.draw();
     this.drawTimer();
 
-
     for (const elem of this.arrayOfSecondObstacles) {
-   elem.draw();
-    };
+      elem.draw();
+    }
   }
-
 }
