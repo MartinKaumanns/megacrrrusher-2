@@ -42,75 +42,78 @@ class Player extends GameElement {
     let crushedToDeathBottom = false;
 
     for (let element of this.game.arrayOfObstacles) {
-
       for (let obstacle of element) {
-
-    const horizontalIntersection = obstacle.checkIntersection({
-      ...this,
-      x: newX
-    });
-    if (horizontalIntersection) {
-      newSpeedX = 0;
-      newX = this.x - 2;
-    }
-    const verticalIntersection = obstacle.checkIntersection({
-      ...this,
-      x: newX,
-      y: newY
-    });
-    if (verticalIntersection) {
-      newSpeedY = 0;
-      if (obstacle.behavior === -1) {
-        newY = obstacle.y + obstacle.height + this.radius;
-        crushedToDeathTop = true;
-      } else if (obstacle.behavior === 1) {
-        newY = obstacle.y - this.radius;
-        crushedToDeathBottom = true;
+        const horizontalIntersection = obstacle.checkIntersection({
+          ...this,
+          x: newX
+        });
+        if (horizontalIntersection) {
+          newSpeedX = 0;
+          if(obstacle.x > this.x){
+            newX = this.x - 2;
+          } else if (obstacle.x < this.x) {
+            newX = this.x + 1;
+          }
+        }
+        const verticalIntersection = obstacle.checkIntersection({
+          ...this,
+          x: newX,
+          y: newY
+        });
+        if (verticalIntersection) {
+          newSpeedY = 0;
+          if (obstacle.behavior === -1) {
+            newY = obstacle.y + obstacle.height + this.radius;
+            crushedToDeathTop = true;
+          } else if (obstacle.behavior === 1) {
+            newY = obstacle.y - this.radius;
+            crushedToDeathBottom = true;
+          }
+        }
       }
     }
-  }
-}
 
     if (crushedToDeathTop && crushedToDeathBottom) {
       game.lose();
     }
 
-  
-// Second Obstacle: Intersection checks
+    // Second Obstacle: Intersection checks
 
     let crushedToDeathFloor = false;
-    
+
     for (let obstacle of this.game.arrayOfSecondObstacles) {
-      
+      const horizontalIntersection = obstacle.checkIntersection({
+        ...this,
+        x: newX
+      });
+      if (horizontalIntersection) {
+        newSpeedX = 0;
+        if(obstacle.x > this.x){
+          newX = this.x - 1;
+        } else if (obstacle.x < this.x) {
+          newX = this.x + 1;
+        }
+      }
 
-    const horizontalIntersection = obstacle.checkIntersection({
-      ...this,
-      x: newX
-    });
-    if (horizontalIntersection) {
-      newSpeedX = 0;
-      newX = this.x - 1;
-    }
+      const verticalIntersection = obstacle.checkIntersection({
+        ...this,
+        x: newX,
+        y: newY
+      });
 
-    const verticalIntersection = obstacle.checkIntersection({
-      ...this,
-      x: newX,
-      y: newY
-    });
-    
-    if (verticalIntersection) {
-      newSpeedY = 0;
-      if (obstacle.y <= this.radius) {
-        crushedToDeathFloor = true;
-      } else if (obstacle.y <= this.game.canvas.height - this.radius) {
-        crushedToDeathFloor = true;
+      if (verticalIntersection) {
+        newSpeedY = 0;
+        if (obstacle.y <= this.radius) {
+          crushedToDeathFloor = true;
+        } else if (obstacle.y <= this.game.canvas.height - this.radius) {
+          crushedToDeathFloor = true;
+        }
       }
     }
-}
 
-if (crushedToDeathFloor) {
-  game.lose();
-} 
+    if (crushedToDeathFloor) {
+      game.lose();
+    }
 
     Object.assign(this, {
       x: newX,
@@ -138,6 +141,3 @@ if (crushedToDeathFloor) {
     this.game.context.restore();
   }
 }
-
-
-

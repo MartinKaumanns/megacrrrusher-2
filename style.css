@@ -1,115 +1,116 @@
 @font-face {
-    font-family: 'Druk'; /*a name to be used later*/
-    src: url('/fonts/DrukXXCond-Super.otf'); /*URL to font*/
+  font-family: 'Druk'; /*a name to be used later*/
+  src: url('/fonts/DrukXXCond-Super.otf'); /*URL to font*/
 }
 
-
 .classname {
-    font-family: 'Druk';
+  font-family: 'Druk';
 }
 
 * {
-    margin: 0;
-    box-sizing: border-box;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 body {
-    /* width: 100vw;
+  /* width: 100vw;
     height: 100vh; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #000000;
-    color: white;
-    font-family: Druk;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000;
+  color: white;
+  font-family: Druk;
 }
 
 .dot {
-    height: 15px;
-    width: 15px;
-    background-color: #000000;
-    border-radius: 50%;
-    display: inline-block;
-    position: absolute;
-    margin-bottom: 9px;
-    margin-right: 146px;
+  height: 15px;
+  width: 15px;
+  background-color: #000000;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  margin-bottom: 9px;
+  margin-right: 146px;
 }
 
 canvas {
-    background-image: linear-gradient(90deg, #E03300, rgb(255, 255, 255));  
-    background-size: 10000%;
-    animation: bg-animation 0.2s infinite alternate;
-    animation-iteration-count: 3; 
-    animation-delay: 100s;
+  background-image: linear-gradient(90deg, #e03300, rgb(12, 1, 14));
+  background-size: 10000%;
+  animation: bg-animation 15s infinite alternate;
+  animation-iteration-count: 1;
+  animation-delay: 60s;
 }
 @keyframes bg-animation {
-    0% {background-position: left}
-    100% {background-position: right}
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
 }
 
 /* Screen Styling */
 
 .screen {
-    background-color: #E03300;
-    color: #000000;
-    width: 1200px;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 40px;
-    
+  background-color: #e03300;
+  color: #000000;
+  width: 1200px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
 }
 
 .screen h1 {
-    font-size: 830px;
-    margin-top: 40px;
-    line-height: 0;
-    text-align: center;
+  font-size: 830px;
+  margin-top: 40px;
+  line-height: 0;
+  text-align: center;
 }
 
 .finalScore {
-   color: black; 
+  color: black;
 }
 
 button {
-    transform: rotate(-10deg);
-    margin: 0 auto;
-    height: 120px;
-    width:200px;
-    font-weight: 500;
-    
-    margin-top: 270px;
-    cursor: pointer;
-    position: absolute;
-    font-family: sans-serif;
-    border: none;
-    color: black;
-    background-color: rgb(136, 32, 255); 
-    font-size: 1.3rem;
-    padding: 20px 20px;
-    border-radius: 50%;
-    letter-spacing: 1px;
-    
+  transform: rotate(-10deg);
+  margin: 0 auto;
+  height: 120px;
+  width: 200px;
+  font-weight: 500;
+
+  margin-top: 270px;
+  cursor: pointer;
+  position: absolute;
+  font-family: sans-serif;
+  border: none;
+  color: black;
+  background-color: rgb(136, 32, 255);
+  font-size: 1.3rem;
+  padding: 20px 20px;
+  border-radius: 50%;
+  letter-spacing: 1px;
 }
 button:hover {
-    background-color: white;
-    color: black;
+  background-color: white;
+  color: black;
 }
 
 .mc2 {
-    position: absolute;
-    margin: -100px 0 0 550px;
+  position: absolute;
+  margin: -100px 0 0 550px;
 }
 
 #target {
-    display: flex;
-    justify-content: center;
-    transition: opacity 1s;
+  display: flex;
+  justify-content: center;
+  transition: opacity 1s;
 }

@@ -3,7 +3,7 @@
 const startSound = new Audio('sounds/Projekt-Space-Crusher.mp3');
 const EndScreenSound = new Audio('sounds/Projekt-Space-Crusher-End.mp3');
 const obstacalappear = new Audio('sounds/crusher-appear01.mp3');
-const youDead = new Audio('sound/YouareDead.mp3');
+const youDead = new Audio('sounds/YouareDead-less.mp3');
 const finalScoreDiv = document.querySelector('.finalScore');
 
 class Game {
@@ -33,8 +33,7 @@ class Game {
     this.arrayOfObstacles.push(this.obstacles);
     // console.log(this.arrayOfObstacles);
 
-    // SOUND
-    // youDead.play();
+    
 
   // SecondObstacle: RANDOM GENERATION  
   }
@@ -52,9 +51,10 @@ generateSecondObstacle(){
     this.running = true;
     this.startTime = Date.now();
     this.player = new Player(this);
-    this.generateObstacle();
+    // this.generateObstacle();
     this.displayScreen('playing');
     this.loop();
+
   }
 
   /// Switches the three Screens
@@ -71,6 +71,9 @@ generateSecondObstacle(){
     this.arrayOfSecondObstacles = [];
     this.displayScreen('end');
     finalScoreDiv.innerHTML = `SCORE ${this.timer}`;
+    startSound.pause();
+
+    youDead.play();
   }
 
   // NEW CONTROLS
@@ -108,10 +111,12 @@ generateSecondObstacle(){
         this.loop();
 
         // MUSIC
-        // startSound.play();  
+        startSound.play();
+        
       }
     });
   }
+
   runLogic() {
     this.player.runLogic();
     this.trackTime();
@@ -125,17 +130,18 @@ generateSecondObstacle(){
       /// CLEANING THE ARRAY OF OBSTACLES ///
       if (obstacle.x + obstacle.width < 0) {
         const indexOfObstacle = this.arrayOfObstacles.indexOf(obstacle);
-        this.arrayOfObstacles.splice(indexOfObstacle, 1);
+        this.arrayOfObstacles.splice(indexOfObstacle, 3);
       }
     }
     if (this.arrayOfObstacles.length < this.timer / 8) {
       this.generateObstacle();
     }
-    if (Math.random() < 0.002) {
+    /* if (Math.random() < 0.002) {
       this.generateObstacle();
-    }
+    } */
 
-//Second Obstacle: RUN LOGIC
+// Second Obstacle: RUN LOGIC ////
+
     for (const elem of this.arrayOfSecondObstacles) {
       elem.runLogic();
 
@@ -144,23 +150,34 @@ generateSecondObstacle(){
         this.arrayOfSecondObstacles.splice(indexOfElem, 1);
       }
     }
-    if (this.arrayOfSecondObstacles.length < this.timer / Math.floor(Math.random() * (15 - 16 + 1) + 15)) {
-      this.generateSecondObstacle();
-    }
+    if (this.timer > 29) {
+      if (this.arrayOfSecondObstacles.length < this.timer / 20) {
+        this.generateSecondObstacle();
+      }
+        
+      }
+    
+/*     if (this.timer > 20 ) {
+      if (Math.random() < 0.002) {
+        this.generateSecondObstacle();
+      }
+    } */
 
+    
+    
   }
-
   
-
+  
+  
   drawTimer() {
     let seconds = this.timer;
     this.context.font = '36px sans-serif';
     this.context.fillText(seconds, 30, 60);
   }
-
+  
   draw() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
+    
     for (const obstacle of this.arrayOfObstacles) {
       for (const innerObstacle of obstacle) {
         innerObstacle.draw();
